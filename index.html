@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everforest - A Soft and Earthy Color Palette</title>
+
+    <!-- Import Spectral font -->
+    <link href="fonts/spectral.css" rel="stylesheet">
+
+    <!-- Include Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+
+    <!-- Devicon CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@latest/devicon.min.css">
+
+    <!-- Link to CSS file -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Everforest</h1>
+        <p>A soft and earthy color palette inspired by nature</p>
+        <div class="theme-selector">
+            <label for="theme">Choose Shade:</label>
+            <select id="theme" onchange="changeTheme()">
+                <option value="dark">Dark</option>
+                <option value="medium">Medium</option>
+                <option value="light">Light</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Code editor section -->
+        <section class="code-editor-container">
+            <div class="language-tabs">
+                <i class="devicon-python-plain" data-language="python" onclick="changeLanguage('python')"></i>
+                <i class="devicon-javascript-plain" data-language="javascript" onclick="changeLanguage('javascript')"></i>
+                <i class="devicon-go-plain" data-language="go" onclick="changeLanguage('go')"></i>
+                <i class="devicon-c-plain" data-language="c" onclick="changeLanguage('c')"></i>
+                <i class="devicon-markdown-plain" data-language="markdown" onclick="changeLanguage('markdown')"></i>
+                <i class="devicon-mysql-plain" data-language="sql" onclick="changeLanguage('sql')"></i>
+                <i class="devicon-rust-plain" data-language="rust" onclick="changeLanguage('rust')"></i>
+            </div>
+            <pre class="code-editor" id="codeEditor" contenteditable="true" oninput="highlightCode()">
+                <code class="language-javascript">// Sample Code
+function helloWorld() {
+    console.log("Hello, World!");
+}
+helloWorld();</code>
+            </pre>
+        </section>
+
+        <!-- Palette component -->
+        <section class="palette-container" id="paletteContainer">
+            <!-- Color swatches will be injected here by JavaScript -->
+        </section>
+
+        <!-- Available themes -->
+        <section class="theme-links">
+            <h2>Available Themes</h2>
+            <div class="card-container">
+                <div class="card">
+                    <i class="devicon-vscode-plain"></i>
+                    <h3>Visual Studio Code</h3>
+                    <a href="https://github.com/sainnhe/everforest/wiki/VSCode" target="_blank">Get Theme</a>
+                </div>
+                <div class="card">
+                    <i class="devicon-vim-plain"></i>
+                    <h3>Vim</h3>
+                    <a href="https://github.com/sainnhe/everforest/wiki/Vim" target="_blank">Get Theme</a>
+                </div>
+                <div class="card">
+                    <i class="devicon-terminal-plain"></i>
+                    <h3>Terminal</h3>
+                    <a href="https://github.com/sainnhe/everforest/wiki/Terminal" target="_blank">Get Theme</a>
+                </div>
+                <div class="card">
+                    <i class="devicon-iterm2-plain"></i>
+                    <h3>iTerm2</h3>
+                    <a href="https://github.com/sainnhe/everforest/wiki/iTerm2" target="_blank">Get Theme</a>
+                </div>
+                <div class="card">
+                    <i class="devicon-jetbrains-plain"></i>
+                    <h3>JetBrains IDEs</h3>
+                    <a href="https://github.com/sainnhe/everforest/wiki/JetBrains-IDEs" target="_blank">Get Theme</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Everforest Theme. All rights reserved.</p>
+    </footer>
+
+    <!-- Link to JavaScript files -->
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
