@@ -92,24 +92,48 @@ header p {
 
 /* Palette Component */
 .palette-container {
+    width: 90%;
+    max-width: 800px; /* Matches the width of the code-editor section */
+    margin: 0 auto; /* Center horizontally, no top/bottom margin */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.palette-title {
+    font-family: Spectral, serif;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+    text-align: left;
+    color: #d3c6aa; /* Adjust based on the theme */
+    display: block; /* Ensures the title is a block element */
+}
+
+.palette-row {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin: 20px auto;
-    max-width: 800px;
+    margin-bottom: 30px; /* Adds some spacing between rows */
 }
+
 
 /* Tooltip container */
 .color-card {
     position: relative;
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    overflow: visible; /* Change from hidden to visible to allow tooltip overflow */
-    text-align: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.color-card-title {
+    font-size: 14px;
     color: #fff;
-    font-family: 'Spectral', serif;
-    transition: transform 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .color-card:hover {
@@ -153,31 +177,14 @@ header p {
     transform: translateY(0) rotate(0); /* Smooth out the swinging effect */
 }
 
-.color-card-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 5px 0;
-    font-size: 14px;
-    text-align: center;
-    color: #fff;
-    box-sizing: border-box;
-}
 
 .copy-button {
-    display: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: #333;
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
-    border-radius: 5px;
-    padding: 5px;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 12px;
+    border-radius: 5px;
+    display: none; /* Hidden by default, shown on hover */
 }
 
 .color-card:hover .copy-button {
