@@ -5,12 +5,16 @@ def hello_world():
     print("Hello, World!")
 
 hello_world()
+
+
 `,
     javascript: `// Sample Code
 function helloWorld() {
     console.log("Hello, World!");
 }
 helloWorld();
+
+
 `,
     go: `// Sample Code
 package main
@@ -28,19 +32,32 @@ int main() {
     printf("Hello, World!\\n");
     return 0;
 }
+
+
 `,
     markdown: `<!-- Sample Code -->
 # Hello, World!
 
 This is a sample markdown document.
+
+
+
 `,
     sql: `-- Sample Code
 SELECT 'Hello, World!' AS greeting;
+
+
+
+
+
 `,
     rust: `// Sample Code
 fn main() {
     println!("Hello, World!");
 }
+
+
+
 `
 };
 
