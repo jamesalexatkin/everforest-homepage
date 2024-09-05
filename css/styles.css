@@ -128,11 +128,21 @@ header p {
     justify-content: flex-end;
     align-items: center;
     transition: transform 0.2s ease-in-out;
+    /* color: #d3c6aa;  */
 }
 
 .color-card-title {
+    font-family: Spectral, serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.color-card-hex {
+    font-family: Spectral, serif;
     font-size: 14px;
-    color: #fff;
+    text-align: center;
     margin-bottom: 10px;
 }
 

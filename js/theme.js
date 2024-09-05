@@ -50,6 +50,10 @@ function renderPalette(theme) {
         titleDiv.className = "color-card-title";
         titleDiv.textContent = title;
 
+        const hexCodeDiv = document.createElement("div");
+        hexCodeDiv.className = "color-card-hex";
+        hexCodeDiv.textContent = color;
+
         const copyButton = document.createElement("button");
         copyButton.className = "copy-button";
         copyButton.textContent = "Copy";
@@ -66,6 +70,7 @@ function renderPalette(theme) {
         feedback.textContent = "Copied!";
 
         card.appendChild(titleDiv);
+        card.appendChild(hexCodeDiv);
         card.appendChild(copyButton);
         card.appendChild(tooltip);
         card.appendChild(feedback);
@@ -73,8 +78,10 @@ function renderPalette(theme) {
         // Use the `type` field to determine which container to append to
         if (type === "background") {
             backgroundPaletteContainer.appendChild(card);
+            card.style.color = colors["fg"].color;
         } else {
             foregroundPaletteContainer.appendChild(card);
+            card.style.color = colors["bg0"].color;
         }
     }
 }
