@@ -45,6 +45,8 @@ function renderPalette(theme) {
         const card = document.createElement("div");
         card.className = "color-card";
         card.style.backgroundColor = color;
+        card.style.color = type === "background" ? colors["fg"].color : colors["bg0"].color;
+        card.style.cursor = "pointer"; // Change cursor to pointer
 
         const titleDiv = document.createElement("div");
         titleDiv.className = "color-card-title";
@@ -54,36 +56,42 @@ function renderPalette(theme) {
         hexCodeDiv.className = "color-card-hex";
         hexCodeDiv.textContent = color;
 
-        const copyButton = document.createElement("button");
-        copyButton.className = "copy-button";
-        copyButton.textContent = "Copy";
-        copyButton.onclick = function() {
-            copyToClipboard(color, copyButton);
-        };
-
         const tooltip = document.createElement("div");
         tooltip.className = "tooltip-text";
         tooltip.textContent = description;
 
-        const feedback = document.createElement("div");
-        feedback.className = "copy-feedback";
-        feedback.textContent = "Copied!";
-
         card.appendChild(titleDiv);
         card.appendChild(hexCodeDiv);
-        card.appendChild(copyButton);
         card.appendChild(tooltip);
-        card.appendChild(feedback);
 
-        // Use the `type` field to determine which container to append to
+        // Add click event to copy color to clipboard and show toast message
+        card.onclick = function() {
+            copyToClipboard(color);
+            showToast("Copied to clipboard!");
+        };
+
         if (type === "background") {
             backgroundPaletteContainer.appendChild(card);
-            card.style.color = colors["fg"].color;
         } else {
             foregroundPaletteContainer.appendChild(card);
-            card.style.color = colors["bg0"].color;
         }
     }
+}
+
+function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = 0;
+    }, 2000); // Toast disappears after 3 seconds
+
+    setTimeout(() => {
+        document.body.removeChild(toast);
+    }, 3500); // Ensure toast is removed after fade-out
 }
 
 // Change theme and re-render palette
