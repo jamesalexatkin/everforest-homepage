@@ -273,15 +273,24 @@ function renderPalette(theme) {
 
     const colors = themes[theme];
 
+    // Set page background and text colors
     const pageBackgroundColorTitle = "bg0";
+    const pageTextColorTitle = "fg";
     document.body.style.backgroundColor = colors[pageBackgroundColorTitle].color;
-    document.body.style.color = colors["fg"].color;
+    document.body.style.color = colors[pageTextColorTitle].color;
 
+    // Set header and footer colors
     const headerFooterColorTitle = "bg_dim";
     document.getElementById("header").style.backgroundColor = colors[headerFooterColorTitle].color;
     document.getElementById("footer").style.backgroundColor = colors[headerFooterColorTitle].color;
     
+    // Set code editor colors
     document.getElementById("code-editor-container").style.backgroundColor = colors[headerFooterColorTitle].color;
+    document.getElementById("codeEditor").style.backgroundColor = colors[headerFooterColorTitle].color;
+
+    // Set theme selector colors
+    document.getElementById("theme").style.backgroundColor = colors["bg3"].color;
+    document.getElementById("theme").style.color = colors[pageTextColorTitle].color;
 
     for (const [title, { color, description, type }] of Object.entries(colors)) {
         const card = document.createElement("div");

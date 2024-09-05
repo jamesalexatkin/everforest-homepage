@@ -31,6 +31,8 @@ header p {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-family: inherit;
+    cursor: pointer;
 }
 
 /* Code Editor Styles */
@@ -76,7 +78,7 @@ header p {
     padding: 15px;
     border-radius: 10px;
     outline: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
     background-color: inherit;
     color: inherit;
     /* max-height: 200px; */
@@ -105,7 +107,6 @@ header p {
     font-size: 18px;
     margin: 20px 0 10px 0;
     text-align: left;
-    color: #d3c6aa; /* Adjust based on the theme */
     display: block; /* Ensures the title is a block element */
 }
 
@@ -241,7 +242,6 @@ header p {
 .theme-links h2 {
     font-size: 1.8em;
     margin-bottom: 15px;
-    color: #2a3d2a; /* Dark green for headings */
 }
 
 .card-container {
