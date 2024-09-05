@@ -177,7 +177,6 @@ header p {
     padding: 8px;
     position: absolute;
     top: -30px; /* Move the tooltip above the card */
-    right: -10px; /* Adjust positioning to swing it out of the card */
     z-index: 10;
     width: 140px; /* Increase width for better visibility */
     font-size: 12px;
