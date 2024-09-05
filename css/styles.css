@@ -255,7 +255,7 @@ header p {
     border-radius: 5px;
     padding: 15px;
     text-align: center;
-    width: 180px;
+    width: 150px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
 }
@@ -266,13 +266,14 @@ header p {
 }
 
 .card i {
-    font-size: 40px;
+    font-size: 48px;
     margin-bottom: 10px;
 }
 
 .card h3 {
-    margin: 0;
-    font-size: 1.2em;
+    font-family: Spectral, serif;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .card a {
