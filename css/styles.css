@@ -249,15 +249,29 @@ header p {
     gap: 15px;
 }
 
+.card-container a.card {
+    display: block; /* Make the entire card clickable */
+    text-decoration: none; /* Remove default link underline */
+    color: inherit; /* Inherit color from parent for text */
+    position: relative; /* To position the rollover effect */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
 .card {
-    background: #fff;
+    padding: 1em;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    width: 150px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+    text-align: center;
+    cursor: pointer; /* Pointer cursor for clickable area */
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 150px;
+}
+
+.card-container a.card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
 }
 
 .card:hover {
