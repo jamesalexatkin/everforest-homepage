@@ -2,15 +2,12 @@
 body {
     font-family: 'Spectral', serif;
     color: #333;
-    background-color: #f0f0f0; /* Default background color */
     margin: 0;
     padding: 0;
     transition: background-color 0.3s ease;
 }
 
 header {
-    background-color: #2a3d2a; /* Dark green for header */
-    color: #d1d1d1;
     padding: 20px;
     text-align: center;
 }
@@ -41,6 +38,9 @@ header p {
     margin: 20px auto;
     width: 90%;
     max-width: 800px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #232A2E;
 }
 
 .language-tabs {
@@ -303,8 +303,6 @@ header p {
 
 /* Footer */
 footer {
-    background-color: #2a3d2a; /* Dark green for footer */
-    color: #d1d1d1;
     padding: 10px;
     text-align: center;
     font-size: 0.9em;
