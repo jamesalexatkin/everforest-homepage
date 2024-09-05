@@ -288,9 +288,9 @@ function renderPalette(theme) {
         card.className = "color-card";
         card.style.backgroundColor = color;
         card.style.color = type === "background" ? colors["fg"].color : colors["bg0"].color;
-        card.style.cursor = "pointer"; // Change cursor to pointer
+        card.style.cursor = "pointer";
 
-        // Allow the background color to still be visible
+        // Allow the background color to still be visible on its own color by adding a border around it
         if (title === pageBackgroundColorTitle) {
             card.style.borderColor = colors["bg_dim"].color;
             card.style.borderStyle = "solid";
