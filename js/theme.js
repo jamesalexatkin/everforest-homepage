@@ -292,6 +292,7 @@ function renderPalette(theme) {
     document.getElementById("theme").style.backgroundColor = colors["bg3"].color;
     document.getElementById("theme").style.color = colors[pageTextColorTitle].color;
 
+    // Set swatches
     for (const [title, { color, description, type }] of Object.entries(colors)) {
         const card = document.createElement("div");
         card.className = "color-card";
@@ -333,6 +334,12 @@ function renderPalette(theme) {
         } else {
             foregroundPaletteContainer.appendChild(card);
         }
+    }
+
+    // Set colors of program cards
+    var programs = document.getElementsByClassName("card");
+    for (let p of programs) {
+        p.style.backgroundColor = colors["bg4"].color;
     }
 }
 
