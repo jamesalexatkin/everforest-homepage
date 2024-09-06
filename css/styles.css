@@ -293,6 +293,12 @@ header p {
     margin-bottom: 10px;
 }
 
+.card svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+}
+
 .card h3 {
     font-family: Spectral, serif;
     font-size: 18px;

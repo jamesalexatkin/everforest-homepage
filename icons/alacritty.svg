@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   fill="currentColor"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="alacritty.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   width="192"
+   height="192"
+   viewBox="0 0 192 192"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.0546875"
+     inkscape:cx="71.856777"
+     inkscape:cy="54.83376"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="189"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     id="path56"
+     d="m 82.011324,113.36894 -4.389022,10.63423 C 89.416056,160.31966 89.416056,160.31966 95.999993,192 102.58393,160.31966 102.58393,160.31966 114.37769,124.00317 L 109.98867,113.36894 95.999993,79.475544 Z"
+     inkscape:connector-curvature="0"
+     style="clip-rule:evenodd;stroke:none;stroke-width:4.65383"
+     fill="currentColor" />
+  <path
+     id="path58"
+     d="M 80.519574,1.0487193e-6 H 111.48041 L 180.0366,170.14625 H 151.28724 L 95.999993,40.193722 40.712763,170.14625 H 11.963401 Z"
+     inkscape:connector-curvature="0"
+     style="clip-rule:evenodd;stroke:none;stroke-width:4.65383"
+     fill="currentColor" />
+</svg>

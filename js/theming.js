@@ -346,7 +346,34 @@ function renderPalette(theme) {
     for (let p of programs) {
         p.style.backgroundColor = colors["bg4"].color;
     }
+    
+    // var programs = document.querySelectorAll(".card,img");
+    // for (let p of programs) {
+    //     p.style.fill = colors[pageTextColorTitle].color;
+    // }
+//    const svgDocument = document.getElementById('jetbrains-icon');
+//         const svgElement = svgDocument.contentDocument;
+//         svgElement.style.fill = colors[pageTextColorTitle].color; // Change the fill color
+//         const paths = svgElement.querySelectorAll('path'); // Select all paths
+
+//     // Change the fill color of all paths
+//     paths.forEach(path => {
+//         path.style.fill = colors[pageTextColorTitle].color;
+//     });
+    changeSvgColor("jetbrains-icon",colors[pageTextColorTitle].color );
 }
+
+function changeSvgColor(iconId, color) {
+    const svgElement = document.getElementById(iconId);
+    if (svgElement) {
+        const svgDoc = svgElement.contentDocument;
+        const svgPaths = svgDoc.querySelectorAll('path');
+        svgPaths.forEach(path => {
+            path.style.fill = color;
+        });
+    }
+}
+
 
 function showToast(message) {
     const toast = document.createElement("div");
