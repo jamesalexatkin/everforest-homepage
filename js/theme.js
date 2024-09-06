@@ -283,6 +283,11 @@ function renderPalette(theme) {
     const headerFooterColorTitle = "bg_dim";
     document.getElementById("header").style.backgroundColor = colors[headerFooterColorTitle].color;
     document.getElementById("footer").style.backgroundColor = colors[headerFooterColorTitle].color;
+    // Set colors of footer links
+    var footerAnchors = document.querySelectorAll("footer,a");
+    for (let a of footerAnchors) {
+        a.style.color = colors[pageTextColorTitle].color;
+    }
     
     // Set code editor colors
     document.getElementById("code-editor-container").style.backgroundColor = colors[headerFooterColorTitle].color;

@@ -108,6 +108,7 @@ header p {
     margin: 20px 0 10px 0;
     text-align: left;
     display: block; /* Ensures the title is a block element */
+    text-align: center;
 }
 
 .palette-row {
@@ -115,6 +116,7 @@ header p {
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 30px; /* Adds some spacing between rows */
+    justify-content: center;
 }
 
 
@@ -241,12 +243,18 @@ header p {
 .theme-links h2 {
     font-size: 1.8em;
     margin-bottom: 15px;
+    text-align: center;
+}
+
+.theme-links h3 {
+    text-align: center;
 }
 
 .card-container {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+    justify-content: center;
 }
 
 .card-container a.card {
@@ -307,4 +315,12 @@ footer {
     padding: 10px;
     text-align: center;
     font-size: 0.9em;
+}
+
+footer a {
+    color: white;
+}
+
+footer a:active, a:visited {
+    color: red;
 }
