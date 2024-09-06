@@ -267,6 +267,7 @@ header p {
     cursor: pointer; /* Pointer cursor for clickable area */
     transition: transform 0.3s, box-shadow 0.3s;
     width: 150px;
+    height: 120px;
 }
 
 .card-container a.card:hover {
