@@ -184,8 +184,7 @@ header p {
     font-size: 12px;
     line-height: 1.4;
     opacity: 0;
-    transform: translateY(-10px) rotate(-3deg); /* Add some rotation for a swinging effect */
-    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.1s
 }
 
 /* Tooltip arrow */
