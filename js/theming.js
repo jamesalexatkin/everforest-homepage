@@ -215,54 +215,6 @@ const colorDescriptions = {
         "statusline3":  "Status Line Mode Indicator", 
 };
 
-function renderThemes() {
-    const ideSection = document.getElementById("ideThemes");
-    const editorSection = document.getElementById("editorThemes");
-
-    ideSection.innerHTML = ''; // Clear previous content
-    editorSection.innerHTML = ''; // Clear previous content
-
-    // Data for themes
-    const themePrograms = {
-        "IDEs": [
-            { name: "JetBrains IntelliJ", icon: "https://devicon.dev/devicon-icons/master/icons/intellij/intellij-original.svg", url: "https://www.jetbrains.com/idea/" },
-            { name: "Visual Studio", icon: "https://devicon.dev/devicon-icons/master/icons/visualstudio/visualstudio-plain.svg", url: "https://visualstudio.microsoft.com/" },
-        ],
-        "Code Editors": [
-            { name: "Visual Studio Code", icon: "https://devicon.dev/devicon-icons/master/icons/vscode/vscode-original.svg", url: "https://code.visualstudio.com/" },
-            { name: "Sublime Text", icon: "https://devicon.dev/devicon-icons/master/icons/sublime/sublime-original.svg", url: "https://www.sublimetext.com/" },
-        ]
-    };
-
-    for (const [sectionTitle, programs] of Object.entries(themePrograms)) {
-        const sectionContainer = sectionTitle === "IDEs" ? ideSection : editorSection;
-
-        programs.forEach(program => {
-            const card = document.createElement("div");
-            card.className = "program-card";
-
-            const icon = document.createElement("img");
-            icon.className = "program-icon";
-            icon.src = program.icon;
-            icon.alt = `${program.name} Icon`;
-
-            const name = document.createElement("div");
-            name.className = "program-name";
-            name.textContent = program.name;
-
-            card.appendChild(icon);
-            card.appendChild(name);
-
-            card.onclick = function() {
-                window.open(program.url, '_blank');
-            };
-
-            sectionContainer.appendChild(card);
-        });
-    }
-}
-
-
 function renderPalette(theme) {
 
     const backgroundPaletteContainer = document.getElementById("backgroundPalette");
@@ -399,6 +351,5 @@ function changeTheme() {
 
 // Initialize palette with default theme
 document.addEventListener('DOMContentLoaded', () => {
-    renderThemes();
     changeTheme(); // Initialize palette with default theme
 });
