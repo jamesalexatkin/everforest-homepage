@@ -283,7 +283,7 @@ function renderPalette(theme) {
         // Add click event to copy color to clipboard and show toast message
         card.onclick = function() {
             copyToClipboard(color);
-            showToast("📋 Copied to clipboard!");
+            showToast(`${title} 📋 Copied to clipboard!`);
         };
 
         if (type === "background") {
