@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palette — Everforest</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=DM+Sans:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script src="js/theming.js" defer></script>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof applyTheme === "function") applyTheme("dark-medium");
+      });
+    </script>
+
+    <style>
+      .coming-soon {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 4rem clamp(1.5rem, 6vw, 6rem);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Same ambient blobs as the homepage hero */
+      .coming-soon::before,
+      .coming-soon::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.12;
+        pointer-events: none;
+      }
+      .coming-soon::before {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, var(--yellow), transparent 70%);
+        top: -80px;
+        left: -80px;
+        animation: drift 20s ease-in-out infinite alternate;
+      }
+      .coming-soon::after {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, var(--blue), transparent 70%);
+        bottom: -60px;
+        right: -60px;
+        animation: drift 25s ease-in-out infinite alternate-reverse;
+      }
+
+      .coming-soon-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.15s ease forwards;
+      }
+
+      .coming-soon-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--yellow);
+      }
+
+      .coming-soon-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 7vw, 5.5rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        color: var(--fg);
+      }
+      .coming-soon-title em {
+        font-style: italic;
+        color: var(--yellow);
+      }
+
+      .coming-soon-sub {
+        font-size: 0.95rem;
+        color: var(--fg-dim);
+        max-width: 38ch;
+        line-height: 1.7;
+      }
+
+      .coming-soon-back {
+        margin-top: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--fg-dim);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .coming-soon-back:hover {
+        color: var(--fg);
+      }
+      .coming-soon-back svg {
+        transition: transform 0.2s;
+      }
+      .coming-soon-back:hover svg {
+        transform: translateX(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a class="nav-logo" href="index.html" aria-label="Everforest">
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 56 56"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle cx="28" cy="28" r="26" fill="var(--bg1)" />
+          <path
+            d="M12 29 Q14 12 38 16 Q38 26 20 28 Q14 29 12 29Z"
+            fill="var(--green)"
+          />
+          <path
+            d="M12 29 Q14 46 38 42 Q38 32 20 30 Q14 29 12 29Z"
+            fill="var(--teal)"
+          />
+        </svg>
+        <span class="nav-wordmark">Ever<span class="forest">forest</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="ports.html">Ports</a></li>
+        <li><a href="palette.html" style="color: var(--fg)">Palette</a></li>
+        <li><a href="https://github.com/sainnhe/everforest">GitHub ↗</a></li>
+      </ul>
+    </nav>
+
+    <main class="coming-soon">
+      <div class="coming-soon-inner">
+        <span class="coming-soon-label">Palette reference</span>
+        <h1 class="coming-soon-title">Coming<br /><em>soon</em></h1>
+        <p class="coming-soon-sub">
+          Hex values, RGB, HSL, and contrast ratios for all six Everforest
+          variants — in one place.
+        </p>
+        <a class="coming-soon-back" href="index.html">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+          >
+            <path d="M10 3L5 8l5 5" />
+          </svg>
+          Back to home
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

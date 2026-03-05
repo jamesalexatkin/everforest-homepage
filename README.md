@@ -6,4 +6,7 @@
 
 Inspired by the [original theme](https://github.com/sainnhe/everforest) by [Sainnhe Park](https://github.com/sainnhe).
 
-To run, just open `index.html` in a browser locally.
+Running:
+
+- `npm install` (first time)
+- `npm run dev`

@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ports — Everforest</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Devicons — port application icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+
+    <!-- Shared styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Page-specific styles -->
+    <style>
+      /* ─── Fix plain-HTML link styles on cards ──────────────────── */
+      .port-card,
+      .port-variant-row {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ─── Shields.io star badge ────────────────────────────────── */
+      .star-badge {
+        height: 18px;
+        /* Desaturate so the badge colour doesn't fight the palette;
+         brightness tweak keeps it legible on dark and light variants */
+        filter: grayscale(1) brightness(1.1);
+        vertical-align: middle;
+        /* Prevent layout shift while the image loads */
+        min-width: 2rem;
+      }
+
+      /* ─── Category accent colours ──────────────────────────────── */
+      /* Each card carries --cat-colour; icon tile bg derives from it  */
+      [data-category="editors"] {
+        --cat-colour: var(--blue);
+      }
+      [data-category="terminals"] {
+        --cat-colour: var(--green);
+      }
+      [data-category="browsers"] {
+        --cat-colour: var(--orange);
+      }
+      [data-category="other"] {
+        --cat-colour: var(--purple);
+      }
+
+      /* ─── Port icon ────────────────────────────────────────────── */
+      .port-icon {
+        font-size: 1.3rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: color-mix(
+          in srgb,
+          var(--cat-colour, var(--fg-dim)) 14%,
+          var(--bg1)
+        );
+        flex-shrink: 0;
+        transition: background 0.2s;
+      }
+
+      /* Devicons are font glyphs — color tints them directly */
+      .port-icon i {
+        color: var(--cat-colour, var(--fg-dim));
+        /* strip the devicon built-in colour; brightness(0) makes it black,
+         invert(1) makes it white, then sepia+saturate+hue-rotate
+         is unnecessary — just use currentColor via color property */
+        -webkit-text-fill-color: var(--cat-colour, var(--fg-dim));
+      }
+
+      /* Emoji: desaturate since we can't truly recolour them */
+      .port-icon span {
+        filter: grayscale(0.6) opacity(0.8);
+      }
+
+      .port-card:hover .port-icon,
+      .port-card.has-variants:hover .port-icon {
+        background: color-mix(
+          in srgb,
+          var(--cat-colour, var(--fg-dim)) 24%,
+          var(--bg1)
+        );
+      }
+
+      /* ─── Page header ──────────────────────────────────────────── */
+      .ports-header {
+        padding: 9rem clamp(1.5rem, 8vw, 8rem) 0;
+      }
+
+      .ports-header .section-label {
+        margin-bottom: 1rem;
+      }
+
+      .ports-header .section-heading {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        margin-bottom: 1rem;
+      }
+
+      .ports-header p {
+        color: var(--fg-dim);
+        font-size: 1rem;
+        max-width: 50ch;
+        line-height: 1.7;
+      }
+
+      /* ─── Search + tabs bar ────────────────────────────────────── */
+      .ports-controls {
+        position: sticky;
+        top: 64px;
+        z-index: 50;
+        background: color-mix(in srgb, var(--bg0) 90%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--bg2);
+        padding: 0 clamp(1.5rem, 8vw, 8rem);
+        transition: background 0.4s;
+      }
+
+      .ports-controls-inner {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+
+      /* Search */
+      .search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.85rem 0;
+        border-right: 1px solid var(--bg2);
+        padding-right: 1.5rem;
+        margin-right: 0.5rem;
+      }
+
+      .search-wrap svg {
+        color: var(--fg-dim);
+        flex-shrink: 0;
+      }
+
+      #portSearch {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--fg);
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 300;
+        width: 180px;
+        transition: width 0.3s;
+      }
+      #portSearch::placeholder {
+        color: var(--fg-dim);
+        opacity: 0.6;
+      }
+      #portSearch:focus {
+        width: 240px;
+      }
+
+      /* Tabs */
+      .ports-tabs {
+        display: flex;
+        gap: 0;
+        flex: 1;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .ports-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .ports-tab {
+        padding: 0 1.25rem;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: var(--fg-dim);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        user-select: none;
+      }
+      .ports-tab:hover {
+        color: var(--fg);
+      }
+      .ports-tab.active {
+        color: var(--fg);
+        border-bottom-color: var(--green);
+      }
+
+      .tab-count {
+        font-size: 0.7rem;
+        background: var(--bg2);
+        color: var(--fg-dim);
+        padding: 0.1rem 0.45rem;
+        border-radius: 1rem;
+        font-weight: 500;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .ports-tab.active .tab-count {
+        background: var(--green);
+        color: var(--bg0);
+      }
+
+      /* ─── Ports grid ───────────────────────────────────────────── */
+      .ports-body {
+        padding: 3rem clamp(1.5rem, 8vw, 8rem) 6rem;
+      }
+
+      .ports-panel {
+        display: none;
+      }
+      .ports-panel.active {
+        display: block;
+      }
+
+      .ports-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--bg2);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--bg2);
+      }
+
+      /* Empty state */
+      .ports-empty {
+        display: none;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: var(--fg-dim);
+        font-size: 0.95rem;
+        grid-column: 1 / -1;
+      }
+      .ports-empty.visible {
+        display: block;
+      }
+
+      /* ─── Port card ────────────────────────────────────────────── */
+      .port-card {
+        background: var(--bg1);
+        padding: 1.5rem;
+        transition: background 0.15s;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .port-card:hover {
+        background: var(--bg2);
+      }
+      .port-card[hidden] {
+        display: none;
+      }
+
+      .port-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .port-name {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--fg);
+        line-height: 1.2;
+      }
+
+      .port-link-icon {
+        flex-shrink: 0;
+        color: var(--fg-dim);
+        opacity: 0;
+        transition:
+          opacity 0.15s,
+          color 0.15s;
+        margin-top: 2px;
+      }
+      .port-card:hover .port-link-icon {
+        opacity: 1;
+        color: var(--green);
+      }
+
+      .port-meta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .port-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.75rem;
+        color: var(--fg-dim);
+      }
+      .port-meta-item svg {
+        flex-shrink: 0;
+      }
+
+      /* ─── Multi-implementation card ────────────────────────────── */
+      .port-card.has-variants {
+        cursor: default;
+      }
+      .port-card.has-variants:hover {
+        background: var(--bg1);
+      }
+
+      .port-variants-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--green);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        font-family: var(--font-body);
+        transition: opacity 0.15s;
+        margin-top: 0.25rem;
+      }
+      .port-variants-toggle:hover {
+        opacity: 0.8;
+      }
+      .port-variants-toggle svg {
+        transition: transform 0.2s;
+      }
+      .port-variants-toggle.open svg {
+        transform: rotate(180deg);
+      }
+
+      .port-variants-list {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid var(--bg2);
+        margin-top: 0.5rem;
+      }
+      .port-variants-list.open {
+        display: flex;
+      }
+
+      .port-variant-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.65rem 0;
+        border-bottom: 1px solid var(--bg2);
+        gap: 1rem;
+        text-decoration: none;
+        transition: background 0.15s;
+        border-radius: 0.25rem;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+      }
+      .port-variant-row:last-child {
+        border-bottom: none;
+      }
+      .port-variant-row:hover {
+        background: var(--bg2);
+      }
+
+      .port-variant-maintainer {
+        font-size: 0.8rem;
+        color: var(--fg);
+        font-weight: 400;
+      }
+
+      .port-variant-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .port-variant-stars {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.72rem;
+        color: var(--fg-dim);
+      }
+
+      .port-variant-link {
+        color: var(--green);
+        flex-shrink: 0;
+      }
+
+      /* ─── No results ───────────────────────────────────────────── */
+      .no-results {
+        padding: 5rem 2rem;
+        text-align: center;
+        color: var(--fg-dim);
+        display: none;
+      }
+      .no-results.visible {
+        display: block;
+      }
+      .no-results p {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+      }
+      .no-results strong {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: var(--fg);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ─── Responsive ───────────────────────────────────────────── */
+      @media (max-width: 600px) {
+        .search-wrap {
+          display: none;
+        }
+        .ports-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <script src="js/theming.js" defer></script>
+    <script src="js/ports.js" defer></script>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a class="nav-logo" href="index.html" aria-label="Everforest">
+        <span class="nav-wordmark">Ever<span class="forest">forest</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="ports.html" style="color: var(--fg)">Ports</a></li>
+        <li><a href="palette.html">Palette</a></li>
+        <li><a href="https://github.com/sainnhe/everforest">GitHub ↗</a></li>
+      </ul>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="ports-header">
+      <p class="section-label">Ports</p>
+      <h1 class="section-heading">Every tool,<br /><em>one palette</em></h1>
+      <p>
+        Everforest ports for editors, terminals, browsers and everything in
+        between. Star counts and update dates fetched from GitHub.
+      </p>
+    </header>
+
+    <!-- SEARCH + TABS -->
+    <div class="ports-controls" id="portsControls">
+      <div class="ports-controls-inner">
+        <div class="search-wrap">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+          >
+            <circle cx="6.5" cy="6.5" r="5" />
+            <path d="M10.5 10.5l3.5 3.5" stroke-linecap="round" />
+          </svg>
+          <input
+            type="search"
+            id="portSearch"
+            placeholder="Search ports…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+        <div class="ports-tabs" id="portsTabs">
+          <div class="ports-tab active" data-tab="all">
+            All <span class="tab-count" id="count-all">0</span>
+          </div>
+          <div class="ports-tab" data-tab="editors">
+            Editors &amp; IDEs
+            <span class="tab-count" id="count-editors">0</span>
+          </div>
+          <div class="ports-tab" data-tab="terminals">
+            Terminals <span class="tab-count" id="count-terminals">0</span>
+          </div>
+          <div class="ports-tab" data-tab="browsers">
+            Browsers <span class="tab-count" id="count-browsers">0</span>
+          </div>
+          <div class="ports-tab" data-tab="other">
+            Other <span class="tab-count" id="count-other">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTS BODY -->
+    <main class="ports-body" id="portsBody">
+      <!-- All tab -->
+      <div class="ports-panel active" id="panel-all">
+        <div class="ports-grid" id="grid-all"></div>
+      </div>
+
+      <!-- Editors tab -->
+      <div class="ports-panel" id="panel-editors">
+        <div class="ports-grid" id="grid-editors"></div>
+      </div>
+
+      <!-- Terminals tab -->
+      <div class="ports-panel" id="panel-terminals">
+        <div class="ports-grid" id="grid-terminals"></div>
+      </div>
+
+      <!-- Browsers tab -->
+      <div class="ports-panel" id="panel-browsers">
+        <div class="ports-grid" id="grid-browsers"></div>
+      </div>
+
+      <!-- Other tab -->
+      <div class="ports-panel" id="panel-other">
+        <div class="ports-grid" id="grid-other"></div>
+      </div>
+
+      <!-- No results -->
+      <div class="no-results" id="noResults">
+        <strong>No ports found</strong>
+        <p>Try a different search term.</p>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-left">
+        <a href="index.html" style="text-decoration: none">
+          <span
+            style="
+              font-family: var(--font-display);
+              font-weight: 300;
+              font-size: 0.95rem;
+              color: var(--fg-dim);
+            "
+            >Ever<span style="color: var(--green)">forest</span></span
+          >
+        </a>
+        <span style="color: var(--bg3); margin: 0 0.5rem">—</span>
+        a colour palette by
+        <a
+          href="https://github.com/sainnhe"
+          style="
+            color: var(--fg-dim);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bg3);
+          "
+          >sainnhe</a
+        >
+        <span style="color: var(--fg-dim); margin: 0 0.5rem">—</span>
+        site maintained by
+        <a
+          href="https://github.com/jamesalexatkin"
+          style="
+            color: var(--fg-dim);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bg3);
+          "
+          >jamesalexatkin</a
+        >
+      </div>
+      <ul class="footer-links">
+        <li>
+          <a href="https://github.com/sainnhe/everforest">Original theme ↗</a>
+        </li>
+        <li>
+          <a href="https://github.com/jamesalexatkin/everforest-homepage"
+            >Site source ↗</a
+          >
+        </li>
+      </ul>
+    </footer>
+  </body>
+</html>

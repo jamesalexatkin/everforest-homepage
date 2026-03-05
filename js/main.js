@@ -1,34 +1,14 @@
-// Function to copy color code to clipboard
-function copyToClipboard(color, button) {
-    navigator.clipboard.writeText(color).then(() => {
-        // Show feedback
-        const feedback = button.previousElementSibling;
-        feedback.style.display = 'block';
-        feedback.style.opacity = 1;
+// ─── main.js — entry point ───────────────────────────────────────────────────
+// Imports are ES modules; index.html loads this with type="module".
 
-        // Hide feedback after a delay
-        setTimeout(() => {
-            feedback.style.opacity = 0;
-            setTimeout(() => {
-                feedback.style.display = 'none';
-            }, 300);
-        }, 1000);
-    });
-}
+import { applyTheme, initThemeSwitcher } from './theming.js';
+import { initEditor } from './code-editor.js';
 
-// Function to get a random language from the available options
-function getRandomLanguage() {
-    const languages = ['python', 'javascript', 'go', 'c', 'markdown', 'sql', 'rust'];
-    const randomIndex = Math.floor(Math.random() * languages.length);
-    return languages[randomIndex];
-}
+// Apply the default theme immediately so there's no flash of unstyled content
+applyTheme('dark-medium');
 
-// Initialize page with dark theme and random language
-function initializePage() {
-    const defaultLanguage = getRandomLanguage();
-    changeLanguage(defaultLanguage);
-    changeTheme(); // Ensure theme is initialized
-}
-
-// Initialize the page when it loads
-document.addEventListener('DOMContentLoaded', initializePage);
+// Wire up interactive components once the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initThemeSwitcher();
+  initEditor();
+});

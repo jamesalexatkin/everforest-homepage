@@ -1,0 +1,11 @@
+{
+  "name": "everforest-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "browser-sync start --server --files '**/*.html, css/**/*.css, js/**/*.js'"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}
