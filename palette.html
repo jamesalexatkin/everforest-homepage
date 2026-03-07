@@ -8,172 +8,456 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=DM+Sans:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="css/styles.css" />
 
-    <script src="js/theming.js" defer></script>
-    <script defer>
-      document.addEventListener("DOMContentLoaded", () => {
-        if (typeof applyTheme === "function") applyTheme("dark-medium");
-      });
-    </script>
-
     <style>
-      .coming-soon {
-        min-height: 100svh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 4rem clamp(1.5rem, 6vw, 6rem);
-        position: relative;
-        overflow: hidden;
+      /* ─── Page header ──────────────────────────────────────────── */
+      .palette-header {
+        padding: 6rem clamp(1.5rem, 8vw, 8rem) 0;
       }
-
-      /* Same ambient blobs as the homepage hero */
-      .coming-soon::before,
-      .coming-soon::after {
-        content: "";
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(90px);
-        opacity: 0.12;
-        pointer-events: none;
+      .palette-header .section-heading {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        margin-bottom: 1rem;
       }
-      .coming-soon::before {
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, var(--yellow), transparent 70%);
-        top: -80px;
-        left: -80px;
-        animation: drift 20s ease-in-out infinite alternate;
-      }
-      .coming-soon::after {
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, var(--blue), transparent 70%);
-        bottom: -60px;
-        right: -60px;
-        animation: drift 25s ease-in-out infinite alternate-reverse;
-      }
-
-      .coming-soon-inner {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        opacity: 0;
-        animation: fadeUp 0.8s 0.15s ease forwards;
-      }
-
-      .coming-soon-label {
-        font-size: 0.75rem;
-        font-weight: 500;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--yellow);
-      }
-
-      .coming-soon-title {
-        font-family: var(--font-display);
-        font-size: clamp(2.5rem, 7vw, 5.5rem);
-        font-weight: 300;
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-        color: var(--fg);
-      }
-      .coming-soon-title em {
-        font-style: italic;
-        color: var(--yellow);
-      }
-
-      .coming-soon-sub {
-        font-size: 0.95rem;
+      .palette-header p {
         color: var(--fg-dim);
-        max-width: 38ch;
+        font-size: 1rem;
+        max-width: 50ch;
         line-height: 1.7;
       }
 
-      .coming-soon-back {
-        margin-top: 0.5rem;
-        display: inline-flex;
+      /* ─── Theme switcher (inline, compact) ────────────────────── */
+      .palette-controls {
+        position: sticky;
+        top: 64px;
+        z-index: 50;
+        background: color-mix(in srgb, var(--bg0) 90%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--bg2);
+        padding: 0.75rem clamp(1.5rem, 8vw, 8rem);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        transition: background 0.4s;
+      }
+
+      .palette-controls-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        flex-shrink: 0;
+      }
+
+      /* ─── Body ─────────────────────────────────────────────────── */
+      .palette-body {
+        padding: 2rem clamp(1.5rem, 8vw, 8rem) 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* ─── Group ────────────────────────────────────────────────── */
+      .palette-group {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .palette-group-label {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--fg-dim);
+        margin-bottom: 1.25rem;
+      }
+
+      .palette-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--bg2);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--bg2);
+      }
+
+      /* ─── Card ─────────────────────────────────────────────────── */
+      .palette-card {
+        background: var(--bg1);
+        display: flex;
+        flex-direction: column;
+        transition: background 0.15s;
+      }
+
+      .palette-card--filler {
+        background: var(--bg0);
+        pointer-events: none;
+      }
+
+      .palette-swatch {
+        height: 80px;
+        display: flex;
+        align-items: flex-end;
+        padding: 0.6rem 0.85rem;
+        transition: background 0.3s;
+      }
+
+      .palette-token-name {
+        font-family: "DM Mono", "Fira Mono", ui-monospace, monospace;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        opacity: 0.75;
+      }
+
+      .palette-card-body {
+        padding: 0.85rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .palette-role-desc {
+        font-size: 0.8rem;
+        color: var(--fg-dim);
+        line-height: 1.4;
+      }
+
+      /* ─── Copyable value chips ─────────────────────────────────── */
+      .palette-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .palette-value {
+        font-family: "DM Mono", "Fira Mono", ui-monospace, monospace;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 0.4rem;
+        background: var(--bg2);
+        border: 1px solid var(--bg3);
+        color: var(--fg-dim);
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+        white-space: nowrap;
+        font-family: var(--font-body);
+      }
+      .palette-value:hover {
+        background: var(--bg3);
+        color: var(--fg);
+        border-color: var(--green);
+      }
+      .palette-value.copied {
+        background: var(--green);
+        color: var(--bg0);
+        border-color: var(--green);
+      }
+
+      /* ─── Contrast row ─────────────────────────────────────────── */
+      .palette-contrast {
+        display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.85rem;
-        color: var(--fg-dim);
-        text-decoration: none;
-        transition: color 0.2s;
       }
-      .coming-soon-back:hover {
+
+      .contrast-ratio {
+        font-family: "DM Mono", "Fira Mono", ui-monospace, monospace;
+        font-size: 0.75rem;
         color: var(--fg);
       }
-      .coming-soon-back svg {
-        transition: transform 0.2s;
+
+      .contrast-grade {
+        font-size: 0.65rem;
+        font-weight: 500;
+        padding: 0.15rem 0.45rem;
+        border-radius: 0.3rem;
+        letter-spacing: 0.04em;
       }
-      .coming-soon-back:hover svg {
-        transform: translateX(-3px);
+      .contrast-grade.pass {
+        background: color-mix(in srgb, var(--green) 18%, var(--bg2));
+        color: var(--green);
+      }
+      .contrast-grade.fail {
+        background: color-mix(in srgb, var(--red) 18%, var(--bg2));
+        color: var(--red);
+      }
+
+      .contrast-against {
+        font-size: 0.7rem;
+        color: var(--fg-dim);
+        margin-left: auto;
+      }
+
+      /* ─── Toast ────────────────────────────────────────────────── */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(0.5rem);
+        background: var(--bg2);
+        border: 1px solid var(--bg3);
+        color: var(--fg);
+        font-size: 0.85rem;
+        padding: 0.6rem 1.25rem;
+        border-radius: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        white-space: nowrap;
+        z-index: 200;
+      }
+      .toast.visible {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ─── Export section ───────────────────────────────────────── */
+      .export-section {
+        padding: 0 clamp(1.5rem, 8vw, 8rem) 6rem;
+      }
+
+      .export-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1px;
+        background: var(--bg2);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--bg2);
+      }
+
+      .export-card {
+        background: var(--bg1);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: background 0.15s;
+        border: none;
+        text-align: left;
+        font-family: var(--font-body);
+      }
+
+      .export-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .export-btn {
+        flex: 1;
+        padding: 0.4rem 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--bg3);
+        background: var(--bg2);
+        color: var(--fg-dim);
+        font-size: 0.75rem;
+        font-family: var(--font-body);
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+        white-space: nowrap;
+      }
+      .export-btn:hover {
+        background: var(--bg3);
+        color: var(--fg);
+        border-color: var(--green);
+      }
+
+      .export-format {
+        font-family: "DM Mono", "Fira Mono", ui-monospace, monospace;
+        font-size: 0.85rem;
+        color: var(--green);
+        font-weight: 500;
+      }
+
+      .export-desc {
+        font-size: 0.8rem;
+        color: var(--fg-dim);
+        line-height: 1.5;
+      }
+
+      /* ─── Responsive ───────────────────────────────────────────── */
+      @media (max-width: 600px) {
+        .palette-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
+
+    <script src="js/theming.js" defer></script>
+    <script src="js/palette.js" defer></script>
   </head>
   <body>
     <!-- NAV -->
     <nav>
       <a class="nav-logo" href="index.html" aria-label="Everforest">
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 56 56"
-          fill="none"
-          aria-hidden="true"
-        >
-          <circle cx="28" cy="28" r="26" fill="var(--bg1)" />
-          <path
-            d="M12 29 Q14 12 38 16 Q38 26 20 28 Q14 29 12 29Z"
-            fill="var(--green)"
-          />
-          <path
-            d="M12 29 Q14 46 38 42 Q38 32 20 30 Q14 29 12 29Z"
-            fill="var(--teal)"
-          />
-        </svg>
         <span class="nav-wordmark">Ever<span class="forest">forest</span></span>
       </a>
       <ul class="nav-links">
         <li><a href="ports.html">Ports</a></li>
         <li><a href="palette.html" style="color: var(--fg)">Palette</a></li>
-        <li><a href="https://github.com/sainnhe/everforest">GitHub ↗</a></li>
+        <li>
+          <a
+            href="https://github.com/sainnhe/everforest"
+            target="_blank"
+            rel="noopener"
+            >GitHub ↗</a
+          >
+        </li>
       </ul>
     </nav>
 
-    <main class="coming-soon">
-      <div class="coming-soon-inner">
-        <span class="coming-soon-label">Palette reference</span>
-        <h1 class="coming-soon-title">Coming<br /><em>soon</em></h1>
-        <p class="coming-soon-sub">
-          Hex values, RGB, HSL, and contrast ratios for all six Everforest
-          variants — in one place.
-        </p>
-        <a class="coming-soon-back" href="index.html">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-          >
-            <path d="M10 3L5 8l5 5" />
-          </svg>
-          Back to home
-        </a>
+    <!-- PAGE HEADER -->
+    <header class="palette-header">
+      <p class="section-label">Palette reference</p>
+      <h1 class="section-heading">Every colour,<br /><em>documented</em></h1>
+      <p>
+        Hex, RGB, HSL and WCAG contrast ratios for all six Everforest variants.
+        Click any value to copy it.
+      </p>
+    </header>
+
+    <!-- THEME SWITCHER -->
+    <div class="palette-controls">
+      <span class="palette-controls-label">Variant</span>
+      <div
+        class="theme-switcher"
+        id="themeSwitcher"
+        style="margin-bottom: 0; opacity: 1; animation: none"
+      >
+        <button class="theme-btn" data-theme="dark-hard">Dark · Hard</button>
+        <button class="theme-btn active" data-theme="dark-medium">
+          Dark · Medium
+        </button>
+        <button class="theme-btn" data-theme="dark-soft">Dark · Soft</button>
+        <button class="theme-btn" data-theme="light-hard">Light · Hard</button>
+        <button class="theme-btn" data-theme="light-medium">
+          Light · Medium
+        </button>
+        <button class="theme-btn" data-theme="light-soft">Light · Soft</button>
       </div>
-    </main>
+    </div>
+
+    <!-- PALETTE GROUPS -->
+    <main class="palette-body" id="paletteGroups"></main>
+
+    <!-- EXPORT -->
+    <section class="export-section">
+      <h2 class="palette-group-label">Export</h2>
+      <div class="export-grid">
+        <div class="export-card">
+          <span class="export-format">.css</span>
+          <span class="export-desc"
+            >CSS custom properties, ready to paste into any stylesheet</span
+          >
+          <div class="export-actions">
+            <button class="export-btn" onclick="exportAs('css', 'copy')">
+              Copy
+            </button>
+            <button class="export-btn" onclick="exportAs('css', 'download')">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="export-card">
+          <span class="export-format">.json</span>
+          <span class="export-desc"
+            >Raw JSON object, useful for build tools and scripts</span
+          >
+          <div class="export-actions">
+            <button class="export-btn" onclick="exportAs('json', 'copy')">
+              Copy
+            </button>
+            <button class="export-btn" onclick="exportAs('json', 'download')">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="export-card">
+          <span class="export-format">.yaml</span>
+          <span class="export-desc"
+            >YAML mapping, handy for config-driven theming systems</span
+          >
+          <div class="export-actions">
+            <button class="export-btn" onclick="exportAs('yaml', 'copy')">
+              Copy
+            </button>
+            <button class="export-btn" onclick="exportAs('yaml', 'download')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-left">
+        <a href="index.html" style="text-decoration: none">
+          <span
+            style="
+              font-family: var(--font-display);
+              font-weight: 300;
+              font-size: 0.95rem;
+              color: var(--fg-dim);
+            "
+            >Ever<span style="color: var(--green)">forest</span></span
+          >
+        </a>
+        <span style="color: var(--bg3); margin: 0 0.5rem">—</span>
+        a colour palette by
+        <a
+          href="https://github.com/sainnhe"
+          style="
+            color: var(--fg-dim);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bg3);
+          "
+          >sainnhe</a
+        >
+        <span style="color: var(--fg-dim); margin: 0 0.5rem">—</span>
+        site maintained by
+        <a
+          href="https://github.com/jamesalexatkin"
+          style="
+            color: var(--fg-dim);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bg3);
+          "
+          >jamesalexatkin</a
+        >
+      </div>
+      <ul class="footer-links">
+        <li>
+          <a href="https://github.com/sainnhe/everforest">Original theme ↗</a>
+        </li>
+        <li>
+          <a href="https://github.com/jamesalexatkin/everforest-homepage"
+            >Site source ↗</a
+          >
+        </li>
+      </ul>
+    </footer>
   </body>
 </html>
