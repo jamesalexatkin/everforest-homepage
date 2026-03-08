@@ -445,6 +445,7 @@
     </style>
 
     <script src="js/theming.js" defer></script>
+    <script src="js/ports-data.js" defer></script>
     <script src="js/ports.js" defer></script>
   </head>
   <body>
@@ -456,7 +457,14 @@
       <ul class="nav-links">
         <li><a href="ports.html" style="color: var(--fg)">Ports</a></li>
         <li><a href="palette.html">Palette</a></li>
-        <li><a href="https://github.com/sainnhe/everforest">GitHub ↗</a></li>
+        <li>
+          <a
+            href="https://github.com/sainnhe/everforest"
+            target="_blank"
+            rel="noopener"
+            >GitHub ↗</a
+          >
+        </li>
       </ul>
     </nav>
 
@@ -507,6 +515,15 @@
           <div class="ports-tab" data-tab="browsers">
             Browsers <span class="tab-count" id="count-browsers">0</span>
           </div>
+          <div class="ports-tab" data-tab="websites">
+            Website Themes <span class="tab-count" id="count-websites">0</span>
+          </div>
+          <div class="ports-tab" data-tab="apps">
+            Applications <span class="tab-count" id="count-apps">0</span>
+          </div>
+          <div class="ports-tab" data-tab="desktop">
+            Desktop <span class="tab-count" id="count-desktop">0</span>
+          </div>
           <div class="ports-tab" data-tab="other">
             Other <span class="tab-count" id="count-other">0</span>
           </div>
@@ -521,7 +538,7 @@
         <div class="ports-grid" id="grid-all"></div>
       </div>
 
-      <!-- Editors tab -->
+      <!-- Editors & IDEs tab -->
       <div class="ports-panel" id="panel-editors">
         <div class="ports-grid" id="grid-editors"></div>
       </div>
@@ -534,6 +551,21 @@
       <!-- Browsers tab -->
       <div class="ports-panel" id="panel-browsers">
         <div class="ports-grid" id="grid-browsers"></div>
+      </div>
+
+      <!-- Website Themes tab -->
+      <div class="ports-panel" id="panel-websites">
+        <div class="ports-grid" id="grid-websites"></div>
+      </div>
+
+      <!-- Applications tab -->
+      <div class="ports-panel" id="panel-apps">
+        <div class="ports-grid" id="grid-apps"></div>
+      </div>
+
+      <!-- Desktop tab -->
+      <div class="ports-panel" id="panel-desktop">
+        <div class="ports-grid" id="grid-desktop"></div>
       </div>
 
       <!-- Other tab -->

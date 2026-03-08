@@ -1,514 +1,8 @@
-// ─── Port data ───────────────────────────────────────────────────────────────
-// `icon`    — Devicons class name (devicon-*) or emoji fallback.
-// `gh`      — 'owner/repo' for GitHub-hosted ports; drives the shields.io badge.
-//             Omit for ports hosted elsewhere (addon stores, sr.ht, etc.).
-// `url`     — link target for the card.
-// `updated` — last-known update, YYYY-MM string.
-// Ports with competing implementations use `variants` instead of a single entry.
+// ─── Ports rendering logic ────────────────────────────────────────────────────
+// Depends on PORTS defined in ports-data.js, loaded before this script.
 
-const PORTS = [
-  // ── Editors & IDEs ────────────────────────────────────────────────────────
-  {
-    category: "editors",
-    name: "Doom Emacs",
-    icon: "devicon-emacs-plain",
-    maintainer: "Cardoso1994",
-    gh: "Cardoso1994/doom-everforest-theme",
-    url: "https://github.com/Cardoso1994/doom-everforest-theme",
-  },
-  {
-    category: "editors",
-    name: "Emacs",
-    icon: "devicon-emacs-plain",
-    maintainer: "theorytoe",
-    url: "https://git.sr.ht/~theorytoe/everforest-theme",
-  },
-  {
-    category: "editors",
-    name: "Gnome Builder",
-    icon: "🛠️",
-    maintainer: "ghostcrafter551",
-    gh: "ghostcrafter551/everforest-gnome-builder",
-    url: "https://github.com/ghostcrafter551/everforest-gnome-builder",
-  },
-  {
-    categories: "editors",
-    name: "Helix",
-    icon: "devicon-helix",
-    maintainer: "",
-    gh: "CptPotato/helix-themes",
-    url: "https://github.com/CptPotato/helix-themes/tree/main/palettes/everforest",
-  },
-  {
-    category: "editors",
-    name: "JetBrains IDEs",
-    icon: "devicon-jetbrains-plain",
-    maintainer: "francma",
-    gh: "francma/everforest-jetbrains",
-    url: "https://github.com/francma/everforest-jetbrains",
-  },
-  {
-    category: "editors",
-    name: "Kakoune",
-    icon: "📝",
-    maintainer: "jdugan6240",
-    url: "https://codeberg.org/jdugan6240/everforest.kak",
-  },
-  {
-    category: "editors",
-    name: "Micro",
-    icon: "📝",
-    maintainer: "atomashevic",
-    gh: "atomashevic/everforest-micro",
-    url: "https://github.com/atomashevic/everforest-micro",
-  },
-  {
-    category: "editors",
-    name: "Neovim",
-    icon: "devicon-neovim-plain",
-    variants: [
-      {
-        maintainer: "sainnhe",
-        gh: "sainnhe/everforest",
-        url: "https://github.com/sainnhe/everforest",
-      },
-      {
-        maintainer: "neanias",
-        gh: "neanias/everforest-nvim",
-        url: "https://github.com/neanias/everforest-nvim",
-      },
-    ],
-  },
-  {
-    category: "editors",
-    name: "Replit",
-    icon: "🔁",
-    maintainer: "talwat321",
-    url: "https://replit.com/theme/@talwat321/everforest",
-  },
-  {
-    category: "editors",
-    name: "TextMate / Sublime Text",
-    icon: "devicon-sublimetext-plain",
-    variants: [
-      {
-        maintainer: "mhanberg",
-        gh: "mhanberg/everforest-textmate",
-        url: "https://github.com/mhanberg/everforest-textmate",
-      },
-      {
-        maintainer: "avelican",
-        gh: "avelican/everforest-sublime",
-        url: "https://github.com/avelican/everforest-sublime",
-      },
-    ],
-  },
-  {
-    category: "editors",
-    name: "Vim",
-    icon: "devicon-vim-plain",
-    maintainer: "sainnhe",
-    gh: "sainnhe/everforest",
-    url: "https://github.com/sainnhe/everforest",
-  },
-  {
-    category: "editors",
-    name: "VS Code",
-    icon: "devicon-vscode-plain",
-    maintainer: "sainnhe",
-    gh: "sainnhe/everforest-vscode",
-    url: "https://github.com/sainnhe/everforest-vscode",
-  },
-  {
-    category: "editors",
-    name: "Visual Studio 2022",
-    icon: "devicon-visualstudio-plain",
-    maintainer: "ZachFranzen",
-    gh: "ZachFranzen/Everforest",
-    url: "https://github.com/ZachFranzen/Everforest",
-  },
-  {
-    category: "editors",
-    name: "Zed",
-    icon: "devicon-zed",
-    maintainer: "ThomasAlban",
-    gh: "ThomasAlban/everforest-zed",
-    url: "https://github.com/ThomasAlban/everforest-zed",
-  },
-
-  // ── Terminals ─────────────────────────────────────────────────────────────
-  {
-    category: "terminals",
-    name: "Alacritty",
-    icon: "🖥️",
-    variants: [
-      {
-        maintainer: "sainnhe",
-        gh: "sainnhe/everforest-alacritty",
-        url: "https://github.com/sainnhe/dotfiles",
-      },
-      {
-        maintainer: "Official",
-        gh: "alacritty/alacritty-theme",
-        url: "https://github.com/alacritty/alacritty-theme",
-      },
-    ],
-  },
-  {
-    category: "terminals",
-    name: "Foot",
-    icon: "🖥️",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "Ghostty",
-    icon: "🖥️",
-    maintainer: "jrswab",
-    gh: "jrswab/ghostty-everforest",
-    url: "https://github.com/jrswab/ghostty-everforest",
-  },
-  {
-    category: "terminals",
-    name: "Gnome Terminal",
-    icon: "🖥️",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "Hyper",
-    icon: "⚡",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "iTerm2",
-    icon: "devicon-apple-original",
-    maintainer: "icewind",
-    gh: "icewind/everforest.iterm2",
-    url: "https://github.com/icewind/everforest.iterm2",
-  },
-  {
-    category: "terminals",
-    name: "Kitty",
-    icon: "devicon-kitty",
-    maintainer: "Official",
-    gh: "kovidgoyal/kitty-themes",
-    url: "https://github.com/kovidgoyal/kitty-themes",
-  },
-  {
-    category: "terminals",
-    name: "Konsole",
-    icon: "devicon-linux-plain",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "MobaXterm",
-    icon: "🖥️",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "Tilix",
-    icon: "🖥️",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "Warp",
-    icon: "🖥️",
-    maintainer: "Official",
-    url: "https://docs.warp.dev/terminal/appearance/themes",
-  },
-  {
-    category: "terminals",
-    name: "WezTerm",
-    icon: "🖥️",
-    maintainer: "In-built",
-    url: "https://wezterm.org/colorschemes/e/index.html#everforest-dark-hard-gogh",
-  },
-  // TODO: check
-  {
-    category: "terminals",
-    name: "Windows Terminal",
-    icon: "devicon-windows8-original",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-  {
-    category: "terminals",
-    name: "Xfce4-Terminal",
-    icon: "devicon-linux-plain",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-
-  // ── Browsers ──────────────────────────────────────────────────────────────
-  {
-    category: "browsers",
-    name: "Chrome",
-    icon: "devicon-chrome-plain",
-    maintainer: "talwat",
-    url: "https://github.com/talwat/dotfiles/tree/main/macOS/everforest/chrome/everforest",
-  },
-  {
-    category: "browsers",
-    name: "Firefox",
-    icon: "devicon-firefox-plain",
-    variants: [
-      {
-        maintainer: "sainnhe",
-        url: "https://addons.mozilla.org/en-US/firefox/addon/everforest-dark-official/",
-      },
-      {
-        maintainer: "talwat",
-        url: "https://addons.mozilla.org/en-US/firefox/addon/everforest-medium-dark/",
-      },
-      {
-        maintainer: "aaheen",
-        url: "https://addons.mozilla.org/en-US/firefox/addon/everforest-spectrum-dark-soft",
-      },
-    ],
-  },
-
-  // ── Other ─────────────────────────────────────────────────────────────────
-  {
-    category: "other",
-    name: "Alfred",
-    icon: "🔍",
-    maintainer: "mhanberg",
-    gh: "mhanberg/everforest-alfred",
-    url: "https://github.com/mhanberg/everforest-alfred",
-  },
-  {
-    category: "other",
-    name: "colorls",
-    icon: "devicon-ruby-plain",
-    maintainer: "talwat",
-    url: "https://github.com/talwat/dotfiles",
-  },
-  {
-    category: "other",
-    name: "Cursors",
-    icon: "🖱️",
-    maintainer: "talwat",
-    gh: "talwat/everforest-cursors",
-    url: "https://github.com/talwat/everforest-cursors",
-  },
-  {
-    category: "other",
-    name: "dipc",
-    icon: "devicon-rust-plain",
-    maintainer: "doprz",
-    gh: "doprz/dipc",
-    url: "https://github.com/doprz/dipc/",
-  },
-  {
-    category: "other",
-    name: "Element",
-    icon: "💬",
-    maintainer: "maksim",
-    url: "https://git.sr.ht/~maksim/element-everforest",
-  },
-  {
-    category: "other",
-    name: "Gitea",
-    icon: "devicon-gitea-plain",
-    maintainer: "sainnhe",
-    url: "https://git.sainnhe.dev/sainnhe/gitea-themes",
-  },
-  {
-    category: "other",
-    name: "i3 / i3-gaps",
-    icon: "devicon-linux-plain",
-    maintainer: "3rfaan",
-    url: "https://github.com/3rfaan/dotfiles",
-  },
-  {
-    category: "other",
-    name: "GTK",
-    icon: "devicon-gnome-plain",
-    maintainer: "Fausto-Korpsvart",
-    gh: "Fausto-Korpsvart/Everforest-GTK-Theme",
-    url: "https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme",
-  },
-  {
-    category: "other",
-    name: "Insomnia",
-    icon: "🌙",
-    maintainer: "talwat",
-    gh: "talwat/insomnia-plugin-everforest-theme",
-    url: "https://github.com/talwat/insomnia-plugin-everforest-theme",
-  },
-  {
-    category: "other",
-    name: "KDE",
-    icon: "devicon-linux-plain",
-    maintainer: "Serge2702",
-    gh: "Serge2702/KDE-Everforest",
-    url: "https://github.com/Serge2702/KDE-Everforest",
-  },
-  {
-    category: "other",
-    name: "Libadwaita (Gradience)",
-    icon: "devicon-gnome-plain",
-    maintainer: "GradienceTeam",
-    url: "https://raw.githubusercontent.com/GradienceTeam/Community/next/curated/everforest.json",
-  },
-  {
-    category: "other",
-    name: "Logseq",
-    icon: "📓",
-    maintainer: "khoulihan",
-    gh: "khoulihan/logseq-everforest-theme",
-    url: "https://github.com/khoulihan/logseq-everforest-theme",
-  },
-  {
-    category: "other",
-    name: "Monkeytype",
-    icon: "⌨️",
-    maintainer: "Community",
-    url: "https://monkeytype.com/",
-  },
-  {
-    category: "other",
-    name: "Obsidian",
-    icon: "🔮",
-    variants: [
-      {
-        maintainer: "kepano",
-        gh: "kepano/obsidian-minimal",
-        url: "https://github.com/kepano/obsidian-minimal",
-      },
-      {
-        maintainer: "0xGlitchByte",
-        gh: "0xGlitchByte/obsidian_everforest",
-        url: "https://github.com/0xGlitchbyte/obsidian_everforest",
-      },
-      {
-        maintainer: "FireIsGood",
-        gh: "FireIsGood/obsidian-everforest-enchanted",
-        url: "https://github.com/FireIsGood/obsidian-everforest-enchanted",
-      },
-    ],
-  },
-  {
-    category: "other",
-    name: "Polybar",
-    icon: "devicon-linux-plain",
-    maintainer: "3rfaan",
-    url: "https://github.com/3rfaan/dotfiles",
-  },
-  {
-    category: "other",
-    name: "Proton (Mail, Calendar, Drive)",
-    icon: "🔒",
-    maintainer: "isaac-8601",
-    gh: "isaac-8601/proton-everforest",
-    url: "https://github.com/isaac-8601/proton-everforest",
-  },
-  {
-    category: "other",
-    name: "Redlib / Libreddit",
-    icon: "devicon-reddit-plain",
-    maintainer: "isaac-8601",
-    gh: "isaac-8601/redlib-everforest",
-    url: "https://github.com/isaac-8601/redlib-everforest",
-  },
-  {
-    category: "other",
-    name: "SearXNG",
-    icon: "🔍",
-    maintainer: "isaac-8601",
-    gh: "isaac-8601/searxng-everforest",
-    url: "https://github.com/isaac-8601/searxng-everforest",
-  },
-  {
-    category: "other",
-    name: "Shiki.js",
-    icon: "devicon-javascript-plain",
-    maintainer: "shikijs",
-    url: "https://shiki.style/",
-  },
-  {
-    category: "other",
-    name: "Slack",
-    icon: "devicon-slack-plain",
-    maintainer: "itendtostare",
-    gh: "itendtostare/everforest-slack",
-    url: "https://github.com/itendtostare/everforest-slack",
-  },
-  {
-    category: "other",
-    name: "Telegram",
-    icon: "devicon-telegram-plain",
-    maintainer: "Skartorion",
-    gh: "Skartorion/telegram-everforest",
-    url: "https://github.com/Skartorion/telegram-everforest",
-  },
-  {
-    category: "other",
-    name: "tmux",
-    icon: "devicon-bash-plain",
-    maintainer: "TanglingTreats",
-    gh: "TanglingTreats/tmux-everforest",
-    url: "https://github.com/TanglingTreats/tmux-everforest",
-  },
-  {
-    category: "other",
-    name: "Xresources",
-    icon: "devicon-xorg-plain",
-    maintainer: "jef",
-    gh: "jef/everforest-xresources",
-    url: "https://github.com/jef/everforest-xresources",
-  },
-  {
-    category: "other",
-    name: "YouTube",
-    icon: "devicon-youtube-plain",
-    maintainer: "mel4tonin",
-    gh: "mel4tonin/everforest-youtube",
-    url: "https://github.com/mel4tonin/everforest-youtube",
-  },
-  {
-    category: "other",
-    name: "Zathura",
-    icon: "📄",
-    maintainer: "maksim",
-    url: "https://git.sr.ht/~maksim/zathura-everforest",
-  },
-  {
-    category: "other",
-    name: "Zellij",
-    icon: "devicon-bash-plain",
-    maintainer: "ghostcrafter551",
-    gh: "ghostcrafter551/everforest-dark-zellij",
-    url: "https://github.com/ghostcrafter551/everforest-dark-zellij",
-  },
-  {
-    category: "other",
-    name: "Zsh",
-    icon: "devicon-bash-plain",
-    maintainer: "sainnhe",
-    url: "https://github.com/sainnhe/dotfiles",
-  },
-];
-
-// ─── Sort alphabetically ──────────────────────────────────────────────────────
+// ─── Sort alphabetically within each category ─────────────────────────────────
 PORTS.sort((a, b) => a.name.localeCompare(b.name));
-
-// ─── Shields.io badge ─────────────────────────────────────────────────────────
-// Renders a flat star count badge for GitHub-hosted ports.
-// style=flat&label= suppresses the "stars" label, leaving just the number.
-// color and labelColor are set to transparent/neutral so it blends in;
-// a CSS filter then desaturates it to match the monochrome meta row.
 
 // ─── Toggle badges ────────────────────────────────────────────────────────────
 // Set to true to re-enable shields.io star badges on port cards.
@@ -529,11 +23,29 @@ const ICON_EXTERNAL = `<svg width="12" height="12" viewBox="0 0 16 16" fill="non
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function iconHTML(icon) {
-  if (!icon) return `<span></span>`;
-  if (icon.startsWith("devicon-"))
-    return `<i class="${icon}" aria-hidden="true"></i>`;
-  return `<span aria-hidden="true">${icon}</span>`;
+// Renders a devicon <i> with the emoji stored in data-emoji for fallback,
+// or just the emoji span if no devicon class is provided.
+function iconHTML(port) {
+  if (port.icon) {
+    return `<i class="${port.icon}" data-emoji="${port.emoji || ""}" aria-hidden="true"></i>`;
+  }
+  return `<span aria-hidden="true">${port.emoji || ""}</span>`;
+}
+
+// ─── Devicon fallback ─────────────────────────────────────────────────────────
+// After the devicon font loads, check each <i> for a missing glyph by measuring
+// its rendered width. A width < 2px means the glyph didn't render; swap to emoji.
+function initDeviconFallback() {
+  document.fonts.ready.then(() => {
+    document.querySelectorAll(".port-icon i[data-emoji]").forEach((el) => {
+      if (el.offsetWidth < 2 && el.dataset.emoji) {
+        const span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = el.dataset.emoji;
+        el.replaceWith(span);
+      }
+    });
+  });
 }
 
 // ─── Card builders ────────────────────────────────────────────────────────────
@@ -543,7 +55,7 @@ function buildSingleCard(port) {
     <a class="port-card" href="${port.url}" target="_blank" rel="noopener"
        data-name="${port.name.toLowerCase()}" data-category="${port.category}">
       <div class="port-card-header">
-        <div class="port-icon">${iconHTML(port.icon)}</div>
+        <div class="port-icon">${iconHTML(port)}</div>
         <span class="port-name">${port.name}</span>
         <span class="port-link-icon">${ICON_ARROW}</span>
       </div>
@@ -554,26 +66,27 @@ function buildSingleCard(port) {
     </a>`;
 }
 
-function buildVariantsCard(port) {
-  const id = port.name.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+function buildVariantsCard(port, gridCat) {
+  const id =
+    port.name.replace(/[^a-z0-9]/gi, "-").toLowerCase() + "-" + gridCat;
   const rows = port.variants
-    .map((v) => {
-      return `
+    .map(
+      (v) => `
       <a class="port-variant-row" href="${v.url}" target="_blank" rel="noopener">
         <span class="port-variant-maintainer">${ICON_PERSON} ${v.maintainer}</span>
         <span class="port-variant-meta">
           ${SHOW_BADGES && v.gh ? starBadge(v.gh) : ""}
           <span class="port-variant-link">${ICON_EXTERNAL}</span>
         </span>
-      </a>`;
-    })
+      </a>`,
+    )
     .join("");
 
   return `
     <div class="port-card has-variants"
          data-name="${port.name.toLowerCase()}" data-category="${port.category}">
       <div class="port-card-header">
-        <div class="port-icon">${iconHTML(port.icon)}</div>
+        <div class="port-icon">${iconHTML(port)}</div>
         <span class="port-name">${port.name}</span>
         <span style="font-size:0.72rem;color:var(--fg-dim);margin-left:auto">${port.variants.length} versions</span>
       </div>
@@ -587,8 +100,10 @@ function buildVariantsCard(port) {
     </div>`;
 }
 
-function buildCard(port) {
-  return port.variants ? buildVariantsCard(port) : buildSingleCard(port);
+function buildCard(port, gridCat) {
+  return port.variants
+    ? buildVariantsCard(port, gridCat)
+    : buildSingleCard(port);
 }
 
 // ─── Variant toggle ───────────────────────────────────────────────────────────
@@ -603,13 +118,23 @@ function toggleVariants(btn, targetId) {
 // ─── Render ───────────────────────────────────────────────────────────────────
 
 function renderAll() {
-  const categories = ["all", "editors", "terminals", "browsers", "other"];
+  const categories = [
+    "all",
+    "editors",
+    "terminals",
+    "browsers",
+    "websites",
+    "apps",
+    "desktop",
+    "other",
+  ];
 
   categories.forEach((cat) => {
     const grid = document.getElementById(`grid-${cat}`);
+    if (!grid) return;
     const ports =
       cat === "all" ? PORTS : PORTS.filter((p) => p.category === cat);
-    grid.innerHTML = ports.map(buildCard).join("");
+    grid.innerHTML = ports.map((p) => buildCard(p, cat)).join("");
 
     const countEl = document.getElementById(`count-${cat}`);
     if (countEl) countEl.textContent = ports.length;
@@ -685,4 +210,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   initTabs();
   initSearch();
+  initDeviconFallback();
 });

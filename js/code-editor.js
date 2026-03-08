@@ -152,22 +152,24 @@ ORDER  BY variant, role;`,
 // ─── Gutter ──────────────────────────────────────────────────────────────────
 
 function renderGutter(code) {
-  const lineCount = code.split('\n').length;
-  const gutter = document.getElementById('editorGutter');
+  const lineCount = code.split("\n").length;
+  const gutter = document.getElementById("editorGutter");
   if (!gutter) return;
-  gutter.textContent = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
+  gutter.textContent = Array.from({ length: lineCount }, (_, i) => i + 1).join(
+    "\n",
+  );
 }
 
 // ─── Language switch ──────────────────────────────────────────────────────────
 
 function switchLanguage(lang, file) {
-  const snippet  = SNIPPETS[lang] ?? '';
-  const codeEl   = document.getElementById('editorCode');
-  const filenameEl = document.getElementById('editorFilename');
+  const snippet = SNIPPETS[lang] ?? "";
+  const codeEl = document.getElementById("editorCode");
+  const filenameEl = document.getElementById("editorFilename");
   if (!codeEl) return;
 
-  codeEl.className    = `language-${lang}`;
-  codeEl.textContent  = snippet;
+  codeEl.className = `language-${lang}`;
+  codeEl.textContent = snippet;
   if (filenameEl) filenameEl.textContent = file;
 
   renderGutter(snippet);
@@ -178,19 +180,21 @@ function switchLanguage(lang, file) {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
 export function initEditor() {
-  const tabs = document.getElementById('editorTabs');
+  const tabs = document.getElementById("editorTabs");
   if (!tabs) return;
 
-  tabs.addEventListener('click', e => {
-    const tab = e.target.closest('.editor-tab');
+  tabs.addEventListener("click", (e) => {
+    const tab = e.target.closest(".editor-tab");
     if (!tab) return;
-    document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
+    document
+      .querySelectorAll(".editor-tab")
+      .forEach((t) => t.classList.remove("active"));
+    tab.classList.add("active");
     switchLanguage(tab.dataset.lang, tab.dataset.file);
   });
 
   // Wait for deferred Prism scripts before first highlight
-  window.addEventListener('load', () => {
-    switchLanguage('python', 'main.py');
+  window.addEventListener("load", () => {
+    switchLanguage("python", "main.py");
   });
 }
